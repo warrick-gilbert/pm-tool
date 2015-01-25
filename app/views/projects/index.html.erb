@@ -1,0 +1,12 @@
+<h1>HEre is a list of all the projects</h1>
+
+<%# The variable projects has been sent by the projects_controller. It is an object that is full of all Projects objects.  %>
+<% @projects.each do |p| %>
+<h2> <%= link_to p.title, p %> </h2>
+<%= p.description %>
+<%= p.due_date %>
+
+<%# I don't have to write p.id below, rails is clever. I think that if it is not given more info, when pressed it tries to find the 'show' action from the controller that sent us here.%>
+<!-- <p><button> <%=  link_to "Edit this project", edit_project_path(p) %></button></p> --> <%# this works %>
+<hr>
+<% end %>

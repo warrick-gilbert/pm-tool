@@ -1,0 +1,27 @@
+<%# Display any errors %>
+<% if @project.errors.any? %>
+  <ul>
+    <% @project.errors.full_messages.each do |msg| %>
+      <li> <%= msg %> </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%# An object called @project has been sent here, it is otherwise empty. %>
+
+<%# form_for is a built-in view helper to generate a form.  %>
+<%= form_for @project do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %> 
+  <br>
+  <%= f.label :description %>
+  <%= f.text_area :description %> 
+  <br>
+  <%= f.label :due_date %>
+  <%= f.date_field :due_date %>
+  <br>
+  <%# you can add an option to the tag below "Click to submit" %>
+  <%# But don't do it and Rails will put the correct label, either "Submit" or "Update" %>
+  <%= f.submit %>
+<%# hitting send will by default send the form to whatever the name is, pluralise it, and put _path on the end. in this case "projects_path" %>
+<% end %>

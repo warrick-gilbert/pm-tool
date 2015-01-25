@@ -1,8 +1,31 @@
 Rails.application.routes.draw do
 
+  # get 'tasks/new'
+
+  get 'tasks/create'
+
+  get 'tasks/show'
+
+  post "/projects/:project_id/tasks/:id/edit" => "tasks#edit"
+  # post '/projects/:project_id/tasks/:id' => "task#edit"
+  # get "tasks/edit"
+
+  get 'tasks/destroy'
+
+  get 'tasks/update'
+
 root "home#index"
 get "/about" => "home#about"
 
+resources :projects do
+  resources :tasks, only: [:create, :destroy]  #this is a nested resource. 
+  # resources will give 7 routes, here the "only" option limits the routes that will be used.
+  # check http://localhost:3000/rails/info/routes  to see this.
+  # Remember: change the routes.rb, restart the serv
+end
+
+
+# get "/projects" => "projects#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

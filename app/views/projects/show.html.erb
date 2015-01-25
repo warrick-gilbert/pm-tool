@@ -1,0 +1,33 @@
+<h1>HERE IS YOUR project</h1>
+
+<h1> <%= @project.title %> </h1>
+<p> <%= @project.description %> </p>
+
+<%# need edit and delete buttons here %>
+
+<%= link_to "Edit Project", edit_project_path(@project) %>
+<hr>
+<h3>Tasks for this project:</h3>
+
+<%# form_for(@task), url: project_tasks_path(@project) do |f| %>  <%# This line works, but is longer  %>
+<%# note the variables @project and  @task below, by convention Rails will go to /questions/id/answers %>
+<%= form_for [@project, @task] do |f| %>  
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_area :title, placeholder: "Write your task here..." %>
+  </div>
+    <%= f.submit class: "btn btn-primary" %>
+<% end %>
+<hr>
+
+<%#  @project.(@task_to_edit) %>
+
+<%# if  %>
+<% @tasks.each do |task| %>
+  <p><%= task.title %></p>
+  <%#link_to "Edit", project_tasks_path(@project, task), method: :post %>
+  <%= link_to "Edit", ("/projects/" + @project.id.to_s + "/tasks/" + (task.id).to_s) + "/edit", method: :post %>
+  <%# link_to "Edit", tasks_edit_path(task) %>
+  <%= link_to "Delete", project_task_path(@project, task), method: :delete, data: {confirm: "are you sure??"} %>
+<hr>
+<% end %>
