@@ -1,2 +1,17 @@
-<h1>Tasks#edit</h1>
-<p>Find me in app/views/tasks/edit.html.erb</p>
+<h1>So you wnat to edit your task huh?</h1>
+
+<p>Project : <%=  @project_id.title %></p>
+<p>Description: <%=  @project_id.description %></p>
+<hr>
+
+<%= form_for (@task_to_edit), url: ("/projects/" + @project_id.id.to_s + "/tasks/" + (@task_to_edit.id).to_s) , method: :patch  do |f| %>  <%# This line works, but is longer  %>
+<%# note the variables @project and  @task below, by convention Rails will go to /questions/id/answers %>
+<%# form_for [@project, @task] do |f| %>  
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_area :title, value: @task_to_edit.title %>
+  </div>
+    <%= f.submit class: "btn btn-primary" %>
+<% end %>
+<hr>
+

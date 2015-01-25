@@ -30,12 +30,12 @@ class TasksController < ApplicationController
 
   def edit
 
-    render text: params  # this is great to see what info is in the form
-    # task_params
-    @task_to_edit = Task.find params[:id]
-    # render text: @task_to_edit.id
+    # render text: params[:project_id]  # this is great to see what info is in the form
     find_project_id
-    
+    @task_to_edit = Task.find params[:id]
+    # @task_to_edit.project_id = params[:project_id]
+    # render text: @task_to_edit.id
+
   end
 
   def destroy
@@ -47,13 +47,19 @@ class TasksController < ApplicationController
   end
 
   def update
+    # render text: params
+    @task = Task.find params[:id]
+    @task.update title: task_params[:title]
+    # # render text: task_params[:title]
+    find_project_id
+    redirect_to project_path(@project_id), notice: "Task updated successfully!! "
   end
 
 
 private
 
 def task_params
-  params.require(:task).permit(:title)
+  params.require(:task).permit(:title)  # removed , :id, :project_id
 end
 
 def find_project_id

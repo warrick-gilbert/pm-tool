@@ -6,13 +6,14 @@ Rails.application.routes.draw do
 
   get 'tasks/show'
 
-  post "/projects/:project_id/tasks/:id/edit" => "tasks#edit"
-  # post '/projects/:project_id/tasks/:id' => "task#edit"
-  # get "tasks/edit"
+  post "/projects/:project_id/tasks/:id" => "tasks#edit" 
+  # post "/projects/:project_id/tasks/:id/edit" => "tasks#edit"  # worked
+  # get "tasks/edit" # original
 
   get 'tasks/destroy'
 
-  get 'tasks/update'
+  patch "/projects/:project_id/tasks/:id" => "tasks#update"
+  # get 'tasks/update' # original
 
 root "home#index"
 get "/about" => "home#about"
