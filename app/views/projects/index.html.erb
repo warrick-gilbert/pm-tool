@@ -4,6 +4,7 @@
 <% @projects.each do |p| %>
 <h2> <%= link_to p.title, p %> </h2>
 <%= p.description %>
+<br>
 <%= p.due_date %>
 
 <%# I don't have to write p.id below, rails is clever. I think that if it is not given more info, when pressed it tries to find the 'show' action from the controller that sent us here.%>

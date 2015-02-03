@@ -11,17 +11,23 @@
 
 <%# form_for is a built-in view helper to generate a form.  %>
 <%= form_for @project do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title %> 
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %> 
+  </div>
   <br>
-  <%= f.label :description %>
-  <%= f.text_area :description %> 
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control" %> 
+  </div>
   <br>
-  <%= f.label :due_date %>
-  <%= f.date_field :due_date %>
+  <div class="form-group">
+    <%= f.label :due_date %>
+    <%= f.date_field :due_date, class: "form-control" %>
+  </div>
   <br>
   <%# you can add an option to the tag below "Click to submit" %>
   <%# But don't do it and Rails will put the correct label, either "Submit" or "Update" %>
-  <%= f.submit %>
+  <%= f.submit class: "btn btn-primary" %>
 <%# hitting send will by default send the form to whatever the name is, pluralise it, and put _path on the end. in this case "projects_path" %>
 <% end %>

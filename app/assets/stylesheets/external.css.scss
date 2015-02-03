@@ -1,0 +1,14 @@
+/*
+ * These lines are required to load other files in the manifest
+ *
+ *= require bootstrappy
+ *= require_self
+ */
+
+.nav{
+  background-color: blue;
+}
+
+h1 {
+  color: grey;
+}

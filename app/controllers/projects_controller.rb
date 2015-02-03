@@ -1,8 +1,16 @@
 class ProjectsController < ApplicationController
 
   def index
-    # send an instance variable with all project data
-    @projects = Project.order(:id)  
+    # if the search term exists
+    if params[:search_term]
+      grab_params
+      search_term = "\%" + @search_term + "\%"
+      # send an instance variable with the project data that matches the search, order it by :id
+      @projects = Project.all.where("title ILIKE ? OR description LIKE ?", search_term, search_term).order(:id)  
+    else
+      # send an instance variable with all project data
+      @projects = Project.order(:id)  
+    end
   end
 
   def new
@@ -26,6 +34,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    # debugger
     # render text: params
     # send the project object to the show view
     find_project
@@ -33,6 +42,8 @@ class ProjectsController < ApplicationController
     @tasks = @project.tasks  # not sure if I need this, just a shortcut?
     # This is a new empty task object so that the user can add a task
     @task = Task.new
+    @discussion = Discussion.new
+    # debugger
   end
 
   def edit
@@ -59,10 +70,15 @@ class ProjectsController < ApplicationController
   private
 
   def grab_params
-     # this is the "strong parameters" method to get only the params that we want 
-    # and use them. We use the key called "project" from params, and 
-    # get the values from it.
-    grab_params = params.require(:project).permit(:title, :description)
+    if params[:search_term]
+      @search_term = params[:search_term]
+    else
+       # this is the "strong parameters" method to get only the params that we want 
+      # and use them. We use the key called "project" from params, and 
+      # get the values from it.
+      grab_params = params.require(:project).permit(:title, :description, :due_date) 
+      # + params.require().permit(:commit, :search_term)
+    end
   end
 
   def find_project
