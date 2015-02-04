@@ -23,6 +23,16 @@
 <hr>
 <% @tasks.each do |task| %>
   <p>
+
+
+
+
+    <% if task.done == true %>
+      <%= link_to   "Done", project_task_path(@project, task, task:{done: false}), method: :patch, class: "btn btn-info" %> 
+    <% else %>
+      <%= link_to "Undone", project_task_path(@project, task, task:{done: true}), method: :patch, class: "btn btn-info" %>
+    <% end %>
+
     <%= task.title %>
     <span class="btn-group btn-group-xs" role="group" >
     
@@ -44,10 +54,6 @@
   <p class=' discussion_desc'> <%= banana.description %> 
     <span class="btn-group btn-group-xs" role="group" >
     
-    <%# Rails sugar: You don't have to put the .id in below. %>
-    <%# We're using the delete because we need an HTTP verb. %>
-    <%# this link requires two parameters becuase the routes table shows /thing/:thing_id/thang/:id(.:format)  %>
-    <%# note the colons in this, these are parameters required. %>
     <%= link_to "Edit", edit_project_discussion_path(@project, banana) , class: "btn btn-info"  %>  <%# works %>
     <%= link_to "Delete", project_discussion_path(@project, banana), method: :delete, 
       data: {confirm: "are you sure??"}, class: "btn btn-danger"  %>

@@ -16,14 +16,14 @@ Rails.application.routes.draw do
 
   get 'tasks/destroy'
 
-  patch "/projects/:project_id/tasks/:id" => "tasks#update"
+  # patch "/projects/:project_id/tasks/:id" => "tasks#update"
   # get 'tasks/update' # original
 
 root "home#index"
 get "/about" => "home#about"
 
 resources :projects do
-  resources :tasks, only: [:show, :edit, :create, :destroy]  #this is a nested resource. 
+  resources :tasks, only: [:show, :edit, :create, :destroy, :update]  #this is a nested resource. 
   resources :discussions, only: [:show, :edit, :create, :destroy, :update]
   # resources will give 7 routes, here the "only" option limits the routes that will be used.
   # check http://localhost:3000/rails/info/routes  to see this.

@@ -50,10 +50,11 @@ class TasksController < ApplicationController
   end
 
   def update
-    # render text: params
+    # render text: task_params
     @task = Task.find params[:id]
-    @task.update title: task_params[:title]
-    # # render text: task_params[:title]
+    # @task.update title: task_params[:title]
+    @task.update done: task_params[:done]          # need strong params   ############### NOT WORKING: UNDONR<=>DONE
+    # # # render text: task_params[:title]
     find_project
     redirect_to project_path(@project), notice: "Task updated successfully!! "
   end
@@ -62,7 +63,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title)  # removed , :id, :project_id
+    params.require(:task).permit(:title, :done)  # removed , :id, :project_id
     # params1 = params.require(:task).permit(:title)
     # params2 = params.permit(:project_id, :id)
     # params1.merge(params2)    # returns more good strong params from params
