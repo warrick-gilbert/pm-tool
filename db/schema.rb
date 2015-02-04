@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150201000339) do
+ActiveRecord::Schema.define(version: 20150204053759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "comments", force: :cascade do |t|
     t.text     "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "discussion_id"
   end
 
   create_table "discussions", force: :cascade do |t|
@@ -50,9 +51,10 @@ ActiveRecord::Schema.define(version: 20150201000339) do
   create_table "tasks", force: :cascade do |t|
     t.string   "title"
     t.date     "due_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "project_id"
+    t.boolean  "done",       default: false
   end
 
   add_foreign_key "discussions", "projects"

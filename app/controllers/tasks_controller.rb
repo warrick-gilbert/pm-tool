@@ -59,17 +59,17 @@ class TasksController < ApplicationController
   end
 
 
-private
+  private
 
-def task_params
-  params.require(:task).permit(:title)  # removed , :id, :project_id
-  # params1 = params.require(:task).permit(:title)
-  # params2 = params.permit(:project_id, :id)
-  # params1.merge(params2)    # returns more good strong params from params
-end
+  def task_params
+    params.require(:task).permit(:title)  # removed , :id, :project_id
+    # params1 = params.require(:task).permit(:title)
+    # params2 = params.permit(:project_id, :id)
+    # params1.merge(params2)    # returns more good strong params from params
+  end
 
-def find_project
-  @project = Project.find params[:project_id] # creates an object filled with data
-end
+  def find_project
+    @project = Project.find params[:project_id] # creates an object filled with data
+  end
 
 end

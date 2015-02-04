@@ -1,0 +1,19 @@
+<h1>So you want to edit your discussion huh?</h1>
+
+<p>Project : <%=  @project.title %></p>
+<p>Description: <%=  @project.description %></p>
+<hr>
+<%# note the variables @project and  @discussion below, by convention Rails will go to /questions/id/answers %>
+<%= form_for [@project, @discussion], method: :patch  do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_area :title, value: @discussion.title %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, value: @discussion.description %>
+  </div>
+    <%= f.submit class: "btn btn-primary" %>
+<% end %>
+<hr>
+

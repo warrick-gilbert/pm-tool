@@ -11,3 +11,16 @@
   color: #777;
   font-size: 90%;
 }
+.btn-group {
+  float: right;
+}
+
+#task_title .form-control {
+    // float: right;
+  display: inline-block;
+}
+
+#btn-submit{
+  float: left;
+  display: inline-block;
+}

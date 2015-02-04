@@ -6,7 +6,7 @@ class Discussion < ActiveRecord::Base
   validates :description, presence: {message: "A Discussiong title must be provided!!!"}
 
   # this last bit nullifies the question_id of all associated answers.
-  has_many :comments, dependent: :nullify 
+  has_many :comments, dependent: :destroy 
 
   belongs_to :project
 end

@@ -1,8 +1,8 @@
 <h1><%= @project.title %> </h1>
-  <p><%= @project.description %> </p>
-  <p>Due date: <%= @project.due_date %> </p>
-  <%= link_to "Edit Project", edit_project_path(@project), class: "btn btn-info btn-sm" %>
-  <hr>
+<p><%= @project.description %> </p>
+<p>Due date: <%= @project.due_date %> </p>
+<%= link_to "Edit Project", edit_project_path(@project), class: "btn btn-info btn-sm" %>
+<hr>
 
 <% if @task.errors.any? %>
   <ul>
@@ -12,21 +12,54 @@
   </ul>
 <% end %>
 
-<h3>Tasks for this project:</h3>
+<h3>Tasks</h3>
 <%# form_for(@task), url: project_tasks_path(@project) do |f| %>  <%# This line works, but is longer  %>
 <%# note the variables @project and  @task below, by convention Rails will go to /projects/id/tasks/id %>
 
 <%= form_for [@project, @task] do |f| %>  
-    <%= f.text_field :title, placeholder: "Add a new task here...", class: "form-control" %>
-    <%= f.submit class: 'btn btn-primary'%>
+  <%= f.submit class: 'btn btn-primary'%>
+  <%= f.text_field :title, placeholder: "Add a new task here...", :autofocus=>true, class: "form-control" %>
 <% end %>
 <hr>
-  <% @tasks.each do |task| %>
-    <div class="btn-group btn-group-xs" role="group" >
-      <p><%= task.title %></p>
-      <%= link_to "Edit", ("/projects/" + @project.id.to_s + "/tasks/" + (task.id).to_s) , method: :post, class: "btn btn-info"  %>  <%# works %>
-      <%# link_to "Edit", tasks_edit_path(task) %>
-      <%= link_to "Delete", project_task_path(@project, task), method: :delete, data: {confirm: "are you sure??"}, class: "btn btn-danger"  %>
-    </div>
-<hr>
+<% @tasks.each do |task| %>
+  <p>
+    <%= task.title %>
+    <span class="btn-group btn-group-xs" role="group" >
+    
+    <%# Rails sugar: You don't have to put the .id in below. %>
+    <%# We're using the delete because we need an HTTP verb. %>
+    <%# this link requires two parameters becuase the routes table shows /thing/:thing_id/thang/:id(.:format)  %>
+    <%# note the colons in this, these are parameters required. %>
+    <%= link_to "Edit", edit_project_task_path(@project, task) , class: "btn btn-info"  %>  <%# works %>
+    <%= link_to "Delete", project_task_path(@project, task), method: :delete, 
+      data: {confirm: "are you sure??"}, class: "btn btn-danger"  %>
+    </span>
+  </p>
+  <hr>
 <% end %>
+<h3>Discussions</h3>
+<hr>
+<% @project.discussions.each do |banana| %>
+  <p class =' discussion_title'> <%= banana.title %></p>
+  <p class=' discussion_desc'> <%= banana.description %> 
+    <span class="btn-group btn-group-xs" role="group" >
+    
+    <%# Rails sugar: You don't have to put the .id in below. %>
+    <%# We're using the delete because we need an HTTP verb. %>
+    <%# this link requires two parameters becuase the routes table shows /thing/:thing_id/thang/:id(.:format)  %>
+    <%# note the colons in this, these are parameters required. %>
+    <%= link_to "Edit", edit_project_discussion_path(@project, banana) , class: "btn btn-info"  %>  <%# works %>
+    <%= link_to "Delete", project_discussion_path(@project, banana), method: :delete, 
+      data: {confirm: "are you sure??"}, class: "btn btn-danger"  %>
+    </span>
+
+  </p>
+  <hr>
+<% end %>
+
+<%= form_for [@project, @discussion]  do |f| %>
+  <%=  f.text_field :title, placeholder: "Enter discussion title here...", class: 'form-control' %>
+  <%=  f.text_field :description, placeholder: "Enter discussion body here...", class: 'form-control' %>
+  <%= f.submit class: 'btn btn-primary'%>
+<% end %>
+<hr>

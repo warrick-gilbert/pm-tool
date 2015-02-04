@@ -18,24 +18,54 @@ class DiscussionsController < ApplicationController
       # render project_path(@project.id)
       # render text: project_path(@project.id)
 
-      redirect_to project_path(@project)
+      redirect_to project_path(@project), notice: "Discussion deleted successfully!! "
     end
+  end
 
+  def edit
+    # render text: params
+    find_project
+    @discussion = Discussion.find params[:id]
+  end
+
+  def update
+    grab_params
+    @discussion = Discussion.find params[:id]
+    # render text: @discussion.description
+    @discussion.update title: grab_params[:title]
+    @discussion.update description: grab_params[:description]
+    find_project
+    redirect_to project_path(@project), notice: "Discussion updated successfully!! "
+    
   end
 
   def destroy
+    # render text: params
+    find_project
+    discussion_to_die = Discussion.find params[:id]
+
+# render text:discussion_to_die.id
+
+    discussion_to_die.destroy
+    redirect_to project_path(@project)
   end
 
   private
 
   def grab_params
-    params1 = params.require(:discussion).permit(:title, :description)
-    params2 = params.permit(:project_id)
-    params1.merge(params2)    # returns more good strong params from params
+    params.require(:discussion).permit(:title, :description)
+
+    # if (params[:discussion] != nil)
+    #   params1 = params.require(:discussion).permit(:title, :description)
+    # end
+    # if (params[:project_id] != nil) 
+    #   params2 = params.permit(:project_id, :id) if params (:project_id)
+    # end
+    #   return params1.merge(params2)    # BROKEN returns more good strong params from params
   end
 
   def find_project
-     Project.find grab_params[:project_id] # creates an object filled with data
+     @project = Project.find params[:project_id] # creates an object filled with data
      
   end
 end
