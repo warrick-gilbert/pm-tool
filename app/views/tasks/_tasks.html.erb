@@ -1,0 +1,10 @@
+<%= task.title %>
+        <span class="btn-group btn-group-xs" role="group" >
+          <%# Rails sugar: You don't have to put the .id in below. %>
+          <%# We're using the delete because we need an HTTP verb. %>
+          <%# this link requires two parameters becuase the routes table shows /thing/:thing_id/thang/:id(.:format)  %>
+          <%# note the colons in this, these are parameters required. %>
+          <%= link_to "Edit", edit_project_task_path(@project, task) , class: "btn btn-info"  %>  <%# works %>
+          <%= link_to "Delete", project_task_path(@project, task), method: :delete, 
+          data: {confirm: "are you sure??"}, class: "btn btn-danger"  %>
+        </span>

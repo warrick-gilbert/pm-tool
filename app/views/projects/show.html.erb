@@ -21,32 +21,28 @@
   <%= f.text_field :title, placeholder: "Add a new task here...", :autofocus=>true, class: "form-control" %>
 <% end %>
 <hr>
-<% @tasks.each do |task| %>
-  <p>
+
+<div>Tasks to do
+  <%# @tasks.each do |task|         this was replaced by the line below   %>
+  <% @tasks.where(done: false).order(:created_at => :asc).each do |task|  %> 
+    <div>
+      <%= link_to "Undone", project_task_path(@project, task, task:{done: true}), method: :patch, class: "btn btn-info" %> 
+      <%= render partial: "/tasks/tasks", locals: {task: task}  %>
+    </div>
+  <% end %>  
+</div>
+<br>
+<div>Completed tasks
+  <% @tasks.where(done: true).order(:created_at => :asc).each do |task|  %> 
+    <div>
+      <%= link_to "Done", project_task_path(@project, task, task:{done: false}), method: :patch, class: "btn btn-info" %>
+      <%= render partial: "/tasks/tasks", locals: {task: task}  %>
+    </div>
+  <% end %>  
+</div>
 
 
 
-
-    <% if task.done == true %>
-      <%= link_to   "Done", project_task_path(@project, task, task:{done: false}), method: :patch, class: "btn btn-info" %> 
-    <% else %>
-      <%= link_to "Undone", project_task_path(@project, task, task:{done: true}), method: :patch, class: "btn btn-info" %>
-    <% end %>
-
-    <%= task.title %>
-    <span class="btn-group btn-group-xs" role="group" >
-    
-    <%# Rails sugar: You don't have to put the .id in below. %>
-    <%# We're using the delete because we need an HTTP verb. %>
-    <%# this link requires two parameters becuase the routes table shows /thing/:thing_id/thang/:id(.:format)  %>
-    <%# note the colons in this, these are parameters required. %>
-    <%= link_to "Edit", edit_project_task_path(@project, task) , class: "btn btn-info"  %>  <%# works %>
-    <%= link_to "Delete", project_task_path(@project, task), method: :delete, 
-      data: {confirm: "are you sure??"}, class: "btn btn-danger"  %>
-    </span>
-  </p>
-  <hr>
-<% end %>
 <h3>Discussions</h3>
 <hr>
 <% @project.discussions.each do |banana| %>
