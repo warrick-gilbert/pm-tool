@@ -5,6 +5,7 @@ class Project < ActiveRecord::Base
   has_many :tasks, dependent: :destroy
   has_many :discussions, dependent: :destroy
   has_many :comments, through: :discussions
+  belongs_to :user
 
   # def banana
   #   puts "hello from project!"

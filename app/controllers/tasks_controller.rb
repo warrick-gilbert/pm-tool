@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   def new
   end
 
@@ -9,6 +10,7 @@ class TasksController < ApplicationController
     # we need to assemble some info to make a new task. 
     # All the info came from the params, but is provided by two methods.
     @task = Task.new task_params
+    @task.user = current_user
     find_project  # gets the project id for this task, puts it in @project
     @task.project = @project # puts in the project
     # @task.user = current_user # put more info in
@@ -44,29 +46,25 @@ class TasksController < ApplicationController
   def destroy
     # render text: params  # this is great to see what info is in the form
     find_project
-    task_to_die = Task.find params[:id]
+    task_to_die = current_user.tasks.find params[:id]
     task_to_die.destroy
     redirect_to project_path(@project), notice: "Task deleted successfully!! "
   end
 
   def update
+    # render text: params
     # render text: task_params
     @task = Task.find params[:id]
-    # @task.update title: task_params[:title]
-    @task.update done: task_params[:done]          # need strong params   ############### NOT WORKING: UNDONR<=>DONE
-    # # # render text: task_params[:title]
+    @task.user = current_user
+    @task.update task_params
     find_project
     redirect_to project_path(@project), notice: "Task updated successfully!! "
   end
-
 
   private
 
   def task_params
     params.require(:task).permit(:title, :done)  # removed , :id, :project_id
-    # params1 = params.require(:task).permit(:title)
-    # params2 = params.permit(:project_id, :id)
-    # params1.merge(params2)    # returns more good strong params from params
   end
 
   def find_project

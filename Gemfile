@@ -8,10 +8,10 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
+gem 'devise'
+
 # bootstrap!!
 gem "bootstrap-sass"
-# Use SCSS for stylesheets# this allows gems from 5.0 to 5.9
-gem 'sass-rails', '~> 5.0'  
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

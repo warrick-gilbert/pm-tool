@@ -3,5 +3,6 @@ class Task < ActiveRecord::Base
   validates :title, presence: {message: " - You have to provide a task. "}, uniqueness: {scope: :project_id} 
 
   belongs_to :project
+  belongs_to :user
 
 end
