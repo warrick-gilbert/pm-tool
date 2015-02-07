@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  # before_action :authenticate_user!, except: [:index, :show]
+  
   def index
     # if the search term exists
     if params[:search_term]
@@ -17,7 +18,7 @@ class ProjectsController < ApplicationController
     # send an instance variable of a new (and empty) Project object
     @project = Project.new
   end
-  
+
 
   def create 
 
