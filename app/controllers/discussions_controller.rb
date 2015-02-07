@@ -5,7 +5,7 @@ class DiscussionsController < ApplicationController
     find_project
 
     # render text: @project.id
-    
+
     # make the new discussion object and populate it with the title and description
     @discussion = Discussion.new grab_params
     @discussion.user = current_user
@@ -32,7 +32,7 @@ class DiscussionsController < ApplicationController
   end
 
   def update
-    grab_params
+    grab_params  # redundent?
     @discussion = Discussion.find params[:id]
     # render text: @discussion.description
     @discussion.update title: grab_params[:title]

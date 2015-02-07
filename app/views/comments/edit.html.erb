@@ -1,0 +1,21 @@
+<h1>So you want to edit your comment huh?</h1>
+
+<p>Project : <%=  @project.title %></p>
+<p>Description: <%=  @project.description %></p>
+<hr>
+<p>Discussion : <%=  @discussion.title %></p>
+<p>Description: <%=  @discussion.description %></p>
+<hr>
+
+<%# Syntax: in the form_for with [variable1, variable2] 
+by convention Rails will go to /variable1/variable1.id/variable2/variable2.id %>
+
+<%= form_for [@discussion, @comment], method: :patch  do |f| %>
+  <div class="form-group">
+    <%= f.label :body %>
+    <%= f.text_area :body, value: @comment.body %>
+  </div>
+    <%= f.submit class: "btn btn-primary" %>
+<% end %>
+<hr>
+

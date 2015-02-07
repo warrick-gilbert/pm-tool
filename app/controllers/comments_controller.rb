@@ -14,6 +14,29 @@ class CommentsController < ApplicationController
     end
   end
 
+  def edit
+    # render text: params
+    find_discussion
+    @comment = Comment.find params[:id]
+  end
+
+  def update
+    # render text: params
+    grab_params
+    comment_to_update = Comment.find params[:id]
+    comment_to_update.update body: grab_params[:body]
+    find_discussion
+    redirect_to project_path(@project)
+  end
+
+  def destroy
+    # render text: params
+    comment_to_destroy = Comment.find params[:id]
+    comment_to_destroy.destroy
+    find_discussion
+    redirect_to project_path(@project), notice: "COmment successfully destoyed!"
+  end
+
   private
 
   def find_discussion

@@ -55,15 +55,19 @@
     </span>
   </p>
  
-
-
-  <%# for each discussion we need to show any comments that go with it.  %>
+  <%# SHOW COMMENTS  %>
   <div class='comments'>
     <% discussion_banana.comments.each do |comment_banana| %>
-      <p><%= comment_banana.body %></p>
+      <p><%= comment_banana.body %>
+        <span class="btn-group btn-group-xs" role="group" >
+          <%= link_to "Edit", edit_discussion_comment_path(discussion_banana, comment_banana) , class: "btn btn-info"  %> 
+          <%= link_to "Delete", discussion_comment_path(discussion_banana, comment_banana), method: :delete, 
+          data: {confirm: "are you sure??"}, class: "btn btn-danger"  %>
+        </span>
+      </p>
     <% end %>
 
-
+    <%# FORM FOR NEW COMMENTS %>
     <%= form_for [discussion_banana, @comment || Comment.new] do |f| %>
       <%= f.text_field :body, placeholder: "Enter comment here...", class: 'form-control' %>
       <%= f.submit "Create a comment", class: 'btn btn-primary'%>
