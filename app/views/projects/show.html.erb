@@ -1,7 +1,11 @@
 <h1><%= @project.title %> </h1>
 <p><%= @project.description %> </p>
+<%= link_to "Edit Project", edit_project_path(@project), class: "btn btn-info btn-sm btn-group" %>
 <p>Due date: <%= @project.due_date %> </p>
-<%= link_to "Edit Project", edit_project_path(@project), class: "btn btn-info btn-sm" %>
+<p>Members of this project: <% @project.users.each do |user| %>
+  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+  <%= user.full_name %>   
+<% end %>
 <hr class='thick_line'>
 
 <% if @task.errors.any? %>

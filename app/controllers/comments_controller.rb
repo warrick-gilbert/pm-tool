@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
 
   def destroy
     # render text: params
-    comment_to_destroy = Comment.find params[:id]
+    comment_to_destroy = current_user.comments.find params[:id]
     comment_to_destroy.destroy
     find_discussion
     redirect_to project_path(@project), notice: "COmment successfully destoyed!"

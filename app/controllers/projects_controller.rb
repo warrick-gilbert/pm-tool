@@ -79,7 +79,7 @@ class ProjectsController < ApplicationController
   private
 
   def grab_params
-    grab_params = params.require(:project).permit(:title, :description, :due_date) 
+    grab_params = params.require(:project).permit(:title, :description, :due_date, user_ids: []) 
     # + params.require().permit(:commit, :search_term)
   end
 

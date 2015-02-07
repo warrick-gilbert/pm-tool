@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :tasks
   has_many :discussions
   has_many :comments
+  has_many :projects, through: :members
+  has_many :members, dependent: :destroy
 
 
   def full_name
