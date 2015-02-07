@@ -64,11 +64,12 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :done)  # removed , :id, :project_id
+  params.require(:task).permit(:title, :done)  # removed , :id, :project_id
   end
 
   def find_project
     @project = Project.find params[:project_id] # creates an object filled with data
+    redirect_to root_path, alert: "Access Denied" if current_user.blank?
   end
 
 end

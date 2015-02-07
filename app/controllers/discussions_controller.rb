@@ -2,27 +2,27 @@ class DiscussionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def create
-    grab_params
+    find_project
 
-    # render text: grab_params
-
+    # render text: @project.id
+    
     # make the new discussion object and populate it with the title and description
     @discussion = Discussion.new grab_params
     @discussion.user = current_user
-    # @d.project_id = @project.id
+    @discussion.project_id = @project.id
     # render text: @d.project.title
     # render text:  @d.project_id
-
     if @discussion.save
       redirect_to @project, notice: "Discussion created successfully! "
     else
-      @project = find_project
+      # @project = find_project
       @tasks = @project.tasks
       # render project_path(@project.id)
       # render text: project_path(@project.id)
 
-      redirect_to project_path(@project), notice: "Discussion deleted successfully!! "
+      redirect_to project_path(@project), notice: "nope - didn't manage to save new discussion "
     end
+
   end
 
   def edit
@@ -59,7 +59,7 @@ class DiscussionsController < ApplicationController
   end
 
   def find_project
-     @project = Project.find params[:project_id] # creates an object filled with data
-     
+    @project = Project.find params[:project_id] # creates an object filled with data
+    redirect_to root_path, alert: "Access Denied" if current_user.blank?
   end
 end

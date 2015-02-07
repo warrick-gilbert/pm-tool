@@ -17,6 +17,7 @@ class ProjectsController < ApplicationController
     # send an instance variable of a new (and empty) Project object
     @project = Project.new
   end
+  
 
   def create 
 
@@ -42,15 +43,12 @@ class ProjectsController < ApplicationController
     find_project
     # send any existant associated tasks
     @tasks = @project.tasks  # array-like-thing ActiveRecord Relation
-
-    # debugger
-
-
-    
     # This is a new empty task object so that the user can add a task
     @task = Task.new
     @discussion = Discussion.new
-    # debugger
+    @discussions = @project.discussions # this is used to shorten things 
+    # in the show.html.erb
+    # @comments = @discussions.comments  # don't think this is possible
   end
 
   def edit
@@ -80,21 +78,13 @@ class ProjectsController < ApplicationController
   private
 
   def grab_params
-    if params[:search_term]  # REDUNDENT
-      @search_term = params[:search_term]  # REDUNDENT
-    else
-       # this is the "strong parameters" method to get only the params that we want 
-      # and use them. We use the key called "project" from params, and 
-      # get the values from it.
-      grab_params = params.require(:project).permit(:title, :description, :due_date) 
-      # + params.require().permit(:commit, :search_term)
-    end
+    grab_params = params.require(:project).permit(:title, :description, :due_date) 
+    # + params.require().permit(:commit, :search_term)
   end
 
   def find_project
     # with the id of from the URL, find the object
-    # @project = Project.find params[:id]
-    @project = current_user.projects.find_by_id(params[:id])
-    redirect_to root_path, alert: "Access Denied" unless @project
+    @project = Project.find params[:id] 
+    redirect_to root_path, alert: "Access Denied" if current_user.blank?
   end
 end

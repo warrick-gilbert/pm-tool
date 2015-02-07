@@ -4,12 +4,13 @@
   * background-color: blue;
 }
 .discussion_title{
-  * color: #EEEEEE
+   font-weight: bold;
 }
+
 .discussion_desc{
-  line-height: 50%;
-  color: #777;
-  font-size: 90%;
+  * line-height: 50%;
+  *color: #777;
+  * font-size: 90%;
 }
 .btn-group {
   float: right;
@@ -23,4 +24,15 @@
 #btn-submit{
   float: left;
   display: inline-block;
+}
+
+hr.thick_line {
+   border: none;
+    height: 3px;
+    /* Set the hr color */
+    color: #333; /* old IE */
+    background-color: #333; /* Modern Browsers */
+}
+.comments {
+  margin-left: 2cm;
 }
