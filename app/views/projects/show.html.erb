@@ -11,30 +11,31 @@
   <%= tag.tagname %>    
 <% end %>
 <p class='grey'>Owned by: <%= @project.user.full_name %></p>
-
-
 <p> 
-<% if user_signed_in? && current_user.favourited_this?(@project) %>
-<%# if user_signed_in?  %>
-  <% @favourite = current_user.favourites.find_by_project_id(@project) %>
-  <%= link_to "Unfavourite", project_favourite_path(@project, @favourite), method: :delete, class: "btn btn-info"  %>
-<% else %>
-<!-- check to see if there exists an object in the favourites join table that connects this user and this project. 
-to do this, look in the favourites table for this current_user and see if there is a project_id that matches this project. 
-to do this, send the current_user and the project_id to something that will check if there is an object that ties the tow together. 
-Better would be to send this current-suer to a function, get an array-like thing back, see if this project_id is in it.
-WHere should this function be? Well it's code that does stuff, so it should be in the model.
-Use this if/else statement to call a function called favourited_this? that will return t/f if it is in there. 
- <br>-->
-<%= link_to "Favourite", project_favourites_path(@project), method: :post, class: "btn btn-info"  %>
+<%# @project.user %>
+<%# current_user %>
+<% if current_user != @project.user %>    <%# the owner of the project can't favourite it. %>
+  <% if user_signed_in? && current_user.favourited_this?(@project) %>
+  <%# if user_signed_in?  %>
+    <% @favourite = current_user.favourites.find_by_project_id(@project) %>
+    <%= link_to "Unfavourite", project_favourite_path(@project, @favourite), method: :delete, class: "btn btn-info"  %>
+  <% else %>
+  <!-- check to see if there exists an object in the favourites join table that connects this user and this project. 
+  to do this, look in the favourites table for this current_user and see if there is a project_id that matches this project. 
+  to do this, send the current_user and the project_id to something that will check if there is an object that ties the tow together. 
+  Better would be to send this current-suer to a function, get an array-like thing back, see if this project_id is in it.
+  WHere should this function be? Well it's code that does stuff, so it should be in the model.
+  Use this if/else statement to call a function called favourited_this? that will return t/f if it is in there. 
+   <br>-->
+  <%= link_to "Favourite", project_favourites_path(@project), method: :post, class: "btn btn-info"  %>
 
-<!-- Current user is <%# current_user.full_name %> <br>
-@project.id is <%# @project.id %> <br>
-current_user.favourited_this?(@project.id) is <%# current_user.favourited_this?(@project.id) %> <br>
-current_user.favourite_projects is <%# current_user.favourite_projects %> <br>
-Favourite.find 1 is <%# Favourite.find(1).id %> <br> -->
+  <!-- Current user is <%# current_user.full_name %> <br>
+  @project.id is <%# @project.id %> <br>
+  current_user.favourited_this?(@project.id) is <%# current_user.favourited_this?(@project.id) %> <br>
+  current_user.favourite_projects is <%# current_user.favourite_projects %> <br>
+  Favourite.find 1 is <%# Favourite.find(1).id %> <br> -->
+  <% end %>
 <% end %>
-
 
 </p>
 <hr class='thick_line'>

@@ -28,11 +28,11 @@ Rails.application.routes.draw do
     resources :favourites, only: [:create, :destroy]
   end
 
- 
   resources :discussions, only: [] do
     resources :comments, only: [:create, :edit, :update, :destroy]
-    
   end
+
+ resources :users, only: [:show]  # for showing the users favourites
 
 
 # get "/projects" => "projects#index"

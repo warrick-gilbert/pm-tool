@@ -21,14 +21,21 @@ class User < ActiveRecord::Base
     favourite_projects.include? project_banana
   end
 
-
-
   def full_name
     if first_name || last_name
       "#{first_name} #{last_name}".squeeze.strip
     else
       email
     end
+  end
+
+  def find_favourites
+    # finds all the favourites for this user, this only return that weird
+    # array like thing. then i use the map method, which takes each 
+    # element in the array like thing, and finds the project_id, and then
+    # with this number it goes to the Project and finds each project object,
+    # and then it shows the title of each projct object.
+    favourites.map{ |ff|  Project.find(ff.project_id).title  }
   end
 
 end

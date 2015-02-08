@@ -1,0 +1,5 @@
+<h1> Hey there <%= current_user.first_name %>, your favourite projects are: </h1>
+<% @ffavourites.each do |f| %>
+  <%= f %>
+  <br>
+<% end %>
