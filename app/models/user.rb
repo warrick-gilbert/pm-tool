@@ -8,8 +8,19 @@ class User < ActiveRecord::Base
   has_many :tasks
   has_many :discussions
   has_many :comments
+
   has_many :projects, through: :members
   has_many :members, dependent: :destroy
+
+  has_many :favourites, dependent: :destroy
+  has_many :favourite_projects, through: :favourites, source: :project
+
+  # returns T/F if the user has favourited this 
+  def favourited_this?(project_banana)
+    # Favourite.where(user_id: this.id, project_id: project_banana.id).present?
+    favourite_projects.include? project_banana
+  end
+
 
 
   def full_name

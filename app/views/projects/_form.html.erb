@@ -15,7 +15,7 @@
     <%= f.input :description %>
     <%= f.input :due_date %>
     <%= f.association :users, as: :check_boxes, label_method: :full_name %>
-
+    <%= f.association :tags, as: :check_boxes, label_method: :tagname %>
 
   <%# you can add an option to the tag below "Click to submit" %>
   <%# But don't do it and Rails will put the correct label, either "Submit" or "Update" %>

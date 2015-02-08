@@ -6,8 +6,15 @@ class Project < ActiveRecord::Base
   has_many :discussions, dependent: :destroy
   has_many :comments, through: :discussions
   belongs_to :user
+
   has_many :users, through: :members
   has_many :members, dependent: :destroy
+
+  has_many :tagifications, dependent: :destroy
+  has_many :tags, through: :tagifications
+
+  has_many :favourites, dependent: :destroy
+  has_many :favourited_by_users, through: :favourites, source: :user
 
   # def banana
   #   puts "hello from project!"
