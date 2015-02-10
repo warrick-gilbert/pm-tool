@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
       # if someone other than the discussion owner comments, 
       # send email to discussion owner
       if current_user!= discussion_owner
-        AnswersMailer.notify_discussion_owner(@comment).deliver
+        AnswersMailer.notify_discussion_owner(@comment).deliver_later
       end
       redirect_to @project, notice: "Comment created successfully."
     else

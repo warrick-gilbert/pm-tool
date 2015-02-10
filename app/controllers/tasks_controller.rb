@@ -70,7 +70,7 @@ class TasksController < ApplicationController
       # send email to task owner
       if current_user!= task_owner
         @task.user = current_user
-        AnswersMailer.notify_task_owner(@task).deliver
+        AnswersMailer.notify_task_owner(@task).deliver_later
       end
     end
     find_project
