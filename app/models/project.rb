@@ -20,4 +20,9 @@ class Project < ActiveRecord::Base
   #   puts "hello from project!"
   #   puts "my id is: #{self.id}"
   # end
+
+  # def do_something
+  #   puts "do_something"
+  #   render text: "stopped!"
+  # end
 end

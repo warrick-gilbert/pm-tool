@@ -8,6 +8,13 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     @comment.discussion_id = params[:discussion_id]
     if @comment.save 
+      # find out discussion owner
+      discussion_owner = User.find(@discussion.user_id)  
+      # if someone other than the discussion owner comments, 
+      # send email to discussion owner
+      if current_user!= discussion_owner
+        AnswersMailer.notify_discussion_owner(@comment).deliver
+      end
       redirect_to @project, notice: "Comment created successfully."
     else
       redirect_to @project, notice: "Nope, there was a problem with saving your comment. "
@@ -34,7 +41,7 @@ class CommentsController < ApplicationController
     comment_to_destroy = current_user.comments.find params[:id]
     comment_to_destroy.destroy
     find_discussion
-    redirect_to project_path(@project), notice: "COmment successfully destoyed!"
+    redirect_to project_path(@project), notice: "Comment successfully destoyed!"
   end
 
   private

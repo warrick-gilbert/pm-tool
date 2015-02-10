@@ -9,7 +9,7 @@ class TasksController < ApplicationController
     # we're going to make a new task and save it to the db. 
     # we need to assemble some info to make a new task. 
     # All the info came from the params, but is provided by two methods.
-    @task = Task.new task_params
+    @task = Task.new task_title_params
     @task.user = current_user
     find_project  # gets the project id for this task, puts it in @project
     @task.project = @project # puts in the project
@@ -30,8 +30,10 @@ class TasksController < ApplicationController
     end
   end
 
-  def show
-  end
+  # def show
+  #   # render text: stopped!
+  #   # @project.do_something
+  # end
 
   def edit
 
@@ -52,19 +54,37 @@ class TasksController < ApplicationController
   end
 
   def update
-    # render text: params
-    # render text: task_params
-    @task = Task.find params[:id]
-    @task.user = current_user
-    @task.update task_params
+    @task = Task.find params[:id]    
+    # Need If else statement to sniff out which update tasks are 
+    # to toggle the done/undone, and which are to add a new task
+
+    if task_toggle_params[:done].to_s == "" 
+      # updating the task text
+      @task.update task_title_params
+    else
+      # toggling the done/undone status
+      task_owner = User.find(@task.user_id)  
+      @task.update task_toggle_params
+      # render text: task_params[:done] + @task.user.id.to_s + " " + task_owner.id.to_s + " " + params[:id]
+      # if someone other than the task owner completes the task, 
+      # send email to task owner
+      if current_user!= task_owner
+        @task.user = current_user
+        AnswersMailer.notify_task_owner(@task).deliver
+      end
+    end
     find_project
     redirect_to project_path(@project), notice: "Task updated successfully!! "
   end
 
   private
 
-  def task_params
-  params.require(:task).permit(:title, :done)  # removed , :id, :project_id
+  def task_title_params
+  params.require(:task).permit(:title)
+  end
+
+  def task_toggle_params
+  params.require(:task).permit(:done) 
   end
 
   def find_project
